@@ -1,3 +1,4 @@
+'use strict';
 const bir = require('./index');
 
 // Example usage:
@@ -14,25 +15,25 @@ const main = async () => {
 
     }
     const production = JSON.parse(process.argv[2]);
-    const type = process.argv[3].toLowerCase() === "nip" ? "nip" : "regon";
+    const type = process.argv[3].toLowerCase() === 'nip' ? 'nip' : 'regon';
     const value = process.argv[4];
 
     const client = bir(production);
 
-    console.log("SID: ", await client.login(process.env.GUS_API_KEY));
+    console.log('SID: ', await client.login(process.env.GUS_API_KEY));
     let entity;
-    if(type === 'nip'){
+    if (type === 'nip') {
         entity = await client.search_nip(value);
-    }else{
+    } else {
         entity = await client.search_regon(value);
     }
-    console.log("Search: ", entity);
-    if(entity){
+    console.log('Search: ', entity);
+    if (entity) {
         const report = await client.report(entity.regon14, entity.full_report);
-        console.log("Report: ", report);
+        console.log('Report: ', report);
     }
 };
 
 main().catch(err => {
-    console.log("Something failed.", err);
+    console.log('Something failed.', err);
 });
