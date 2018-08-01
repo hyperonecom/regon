@@ -1,6 +1,6 @@
 'use strict';
 const https = require('https');
-const schema = require('./schema');
+const schema = require('./lib/schema');
 
 const request = (options, body) => new Promise((resolve, reject) => {
     const req = https.request(options, (res) => {
