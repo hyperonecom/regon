@@ -1,0 +1,17 @@
+{
+  "name": "bir",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "node-regon": "^0.1.47",
+    "request": "^2.87.0",
+    "xml2js": "^0.4.19",
+    "xmlbuilder": "^10.0.0"
+  }
+}
