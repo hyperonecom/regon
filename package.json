@@ -4,7 +4,8 @@
   "description": "Client library to access basic information available at BIR1 (REGON database) in Poland.",
   "main": "index.js",
   "scripts": {
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "postversion": "git push && git push --tags"
   },
   "author": "Adam Dobrawy",
   "license": "MIT",
