@@ -5,7 +5,7 @@ const bir = require('./index');
 // GUS_API_KEY="abcde12345abcde12345" nodejs test.js false regon "00033150100000"
 // GUS_API_KEY="abcde12345abcde12345" nodejs test.js false nip "1181985157"
 const main = async () => {
-    if (process.argv.length < 3) {
+    if (process.argv.length !== 5) {
         console.log(`Usage: ${process.argv[0]} [production=true/false] [nip/regon] [value]`);
         process.exit(2);
     }
@@ -14,7 +14,7 @@ const main = async () => {
         process.exit(3);
 
     }
-    const production = JSON.parse(process.argv[2]);
+    const production = process.argv[2] === "true";
     const type = process.argv[3].toLowerCase() === 'nip' ? 'nip' : 'regon';
     const value = process.argv[4];
 
