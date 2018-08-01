@@ -7,6 +7,10 @@
     "lint": "eslint .",
     "postversion": "git push && git push --tags"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com:hyperonecom/regon.git"
+  },
   "author": "Adam Dobrawy",
   "license": "MIT",
   "dependencies": {
