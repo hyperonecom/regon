@@ -14,7 +14,7 @@ const main = async () => {
         process.exit(3);
 
     }
-    const production = process.argv[2] === "true";
+    const production = process.argv[2] === 'true';
     const type = process.argv[3].toLowerCase() === 'nip' ? 'nip' : 'regon';
     const value = process.argv[4];
 
