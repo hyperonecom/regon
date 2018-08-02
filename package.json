@@ -1,6 +1,6 @@
 {
   "name": "@hyperone/regon",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Client library to access basic information available at BIR1 (REGON database) in Poland.",
   "main": "index.js",
   "scripts": {
