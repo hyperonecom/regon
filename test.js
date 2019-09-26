@@ -17,7 +17,7 @@ Object.keys(test_nip_entity).forEach(nip => {
         const client = bir(true);
         await client.login(process.env.GUS_API_KEY);
         const entity = await client.search_nip(nip);
-        const report = await client.report(entity.regon14);
+        const report = await client.report(entity.regon14, entity.full_report);
         for (const field of required_fields) {
             t.true(!!report[field], `Missing field ${field}`);
         }
