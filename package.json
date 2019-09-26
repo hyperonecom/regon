@@ -20,7 +20,7 @@
   },
   "devDependencies": {
     "@hyperone/eslint-config": "^2.0.0",
-    "ava": "1.0.0-beta.6",
+    "ava": "^2.4.0",
     "eslint": "^6.4.0"
   }
 }

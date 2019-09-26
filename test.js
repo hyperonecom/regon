@@ -1,7 +1,7 @@
 'use strict';
-const ava = require('ava');
-const bir = require('./index');
 
+const ava = require('ava');
+const bir = require('.');
 
 const test_nip_entity = {
     5262596640: {
@@ -40,7 +40,7 @@ const test_nip_entity = {
 
 Object.entries(test_nip_entity).forEach(([nip, expect]) => {
     // BIR reject login twice at the same time.
-    ava.test.serial(`Test NIP handling ${expect.name} (${nip})`, async t => {
+    ava.serial(`Test NIP handling ${expect.name} (${nip})`, async t => {
         const client = bir(process.env.GUS_ENV === 'production');
         await client.login(process.env.GUS_API_KEY || 'abcde12345abcde12345');
         const entity = await client.search_nip(nip);
