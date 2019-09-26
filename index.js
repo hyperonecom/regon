@@ -31,34 +31,46 @@ module.exports = (production = false) => {
             'Content-Type': 'application/soap+xml; charset=utf-8',
         },
     };
-    const set_session_id = (sid) => options.headers.sid = sid;
-    return {
-        set_session_id: set_session_id,
-        login: async (api_key) => {
-            const body = schema.ZalogujRequest(api_key);
-            const content = await request(options, body);
-            const sid = await schema.ZalogujResponse(content);
-            if (!sid) {
-                throw new Error("unable to obtain 'sid'. Invalid token?");
-            }
-            set_session_id(sid);
-            return sid;
-        },
-        search_regon: async (regon) => {
-            const body = schema.SzukajRequest(regon, 'Regon');
-            const content = await request(options, body);
-            return schema.SzukajResponse(content);
-        },
-        search_nip: async (nip) => {
-            const body = schema.SzukajRequest(nip, 'Nip');
-            const content = await request(options, body);
-            return schema.SzukajResponse(content);
-        },
-        report: async (regon, type) => {
-            const body = schema.PelnyRaportRequest(regon, type);
-            const content = await request(options, body);
-            return schema.PelnyRaportResponse(content);
-        },
+
+    const client = {};
+
+    client.set_session_id = (sid) => options.headers.sid = sid;
+
+    client.login = async (api_key) => {
+        const body = schema.ZalogujRequest(api_key);
+        const content = await request(options, body);
+        const sid = await schema.ZalogujResponse(content);
+        if (!sid) {
+            throw new Error("unable to obtain 'sid'. Invalid token?");
+        }
+        client.set_session_id(sid);
+        return sid;
     };
+
+    client.search_regon = async (regon) => {
+        const body = schema.SzukajRequest(regon, 'Regon');
+        const content = await request(options, body);
+        return schema.SzukajResponse(content);
+    };
+
+    client.search_nip = async (nip) => {
+        const body = schema.SzukajRequest(nip, 'Nip');
+        const content = await request(options, body);
+        return schema.SzukajResponse(content);
+    };
+
+    client.report = async (regon, type) => {
+        const entity = await client.search_regon(regon);
+        if (!entity) return null;
+        const query_type = type || entity.full_report;
+        const body = schema.PelnyRaportRequest(regon, query_type);
+        const content = await request(options, body);
+        const response = await schema.PelnyRaportResponse(content);
+        return Object.assign({}, ...Object.keys(response).map(key =>
+            ({[key]: response[key] == null ? entity[key] : response[key]})
+        ));
+    };
+
+    return client;
 };
 
