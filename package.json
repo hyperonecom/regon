@@ -15,12 +15,12 @@
   "author": "Adam Dobrawy",
   "license": "MIT",
   "dependencies": {
-    "xml2js": "^0.4.19",
-    "xmlbuilder": "^10.0.0"
+    "xml2js": "^0.4.22",
+    "xmlbuilder": "^13.0.2"
   },
   "devDependencies": {
     "@hyperone/eslint-config": "^2.0.0",
     "ava": "1.0.0-beta.6",
-    "eslint": "^5.2.0"
+    "eslint": "^6.4.0"
   }
 }
