@@ -48,3 +48,12 @@ Object.entries(test_nip_entity).forEach(([nip, expect]) => {
         t.deepEqual(report, expect);
     });
 });
+
+ava.serial('Throws on invalid value', async t => {
+    const client = bir(process.env.GUS_ENV === 'production');
+    await client.login(process.env.GUS_API_KEY || 'abcde12345abcde12345');
+    await t.throwsAsync(client.report('234'), {
+        code: '4',
+        message: 'Nie znaleziono podmiotu dla podanych kryteriów wyszukiwania.',
+    });
+});
