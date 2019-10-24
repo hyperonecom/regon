@@ -8,7 +8,7 @@ const test_nip_entity = {
         city: 'Warszawa',
         community: 'm. st. Warszawa',
         county: 'Mokotów',
-        flaat_no: '',
+        flat_no: '',
         house_no: '21',
         name: 'GŁÓWNY INSPEKTORAT TRANSPORTU DROGOWEGO',
         nip: '5262596640',
@@ -18,7 +18,7 @@ const test_nip_entity = {
         regon9: '017427604',
         street: 'ul. Test-Krucza',
         teryt: '0918130',
-        voidoeship: 'MAZOWIECKIE',
+        voivodeship: 'MAZOWIECKIE',
     },
     6911051353: {
         name: 'Przychodnia Stomatologiczna "VITADENT" Niepubliczny Zakład Opieki Zdrowotnej Jerzy XXXXXXXX',
@@ -28,12 +28,12 @@ const test_nip_entity = {
         regon: '390151863',
         postal_code: '59-220',
         city: 'Legnica',
-        voidoeship: 'DOLNOŚLĄSKIE',
+        voivodeship: 'DOLNOŚLĄSKIE',
         community: 'm. Legnica',
         county: 'M. Legnica',
         street: 'ul. Test-Wilcza',
         house_no: '9',
-        flaat_no: '1',
+        flat_no: '1',
         teryt: '0954047',
     },
 };
@@ -46,5 +46,14 @@ Object.entries(test_nip_entity).forEach(([nip, expect]) => {
         const entity = await client.search_nip(nip);
         const report = await client.report(entity.regon14, entity.full_report);
         t.deepEqual(report, expect);
+    });
+});
+
+ava.serial('Throws on invalid value', async t => {
+    const client = bir(process.env.GUS_ENV === 'production');
+    await client.login(process.env.GUS_API_KEY || 'abcde12345abcde12345');
+    await t.throwsAsync(client.report('234'), {
+        code: '4',
+        message: 'Nie znaleziono podmiotu dla podanych kryteriów wyszukiwania.',
     });
 });
